@@ -1,12 +1,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { twMerge } from "tailwind-merge";
+
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
+import { FaUserAlt } from "react-icons/fa";
 
 import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
 import Button from "./Button";
 
 interface HeaderProps {
@@ -15,12 +19,21 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ children, className }) => {
-  const authModal = useAuthModal()
+  const authModal = useAuthModal();
   const router = useRouter();
 
-  const hangleLogout = () => {
-    //logout
+  const supabaseClient = useSupabaseClient();
+  const { user } = useUser();
+
+  const handleLogout = async () => {
+    const { error } = await supabaseClient.auth.signOut();
+    router.refresh();
+
+    if (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div
       className={twMerge(
@@ -56,20 +69,39 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
           </button>
         </div>
         <div className="flex justify-between items-center gap-x-4">
-          <>
-            <div
-              className="bg-transparent text-neutral-300 font-medium hover:opacity-75 transition cursor-pointer"
-              onClick={authModal.onOpen}
-            >
-              <Button>Sing up</Button>
+          {user ? (
+            <div className="flex gap-x-4 items-center">
+              <Button
+                onClick={handleLogout}
+                className="bg-white text-black px-6 py-2"
+              >
+                Logout
+              </Button>
+              <Button
+                className="bg-green-500 p-3"
+                onClick={() => {
+                  router.push("/account");
+                }}
+              >
+                <FaUserAlt />
+              </Button>
             </div>
-            <div
-              className="bg-white text-black rounded-full px-6 py-2 hover:opacity-75 transition cursor-pointer"
-              onClick={authModal.onOpen}
-            >
-              <Button>Log in</Button>
-            </div>
-          </>
+          ) : (
+            <>
+              <div
+                className="bg-transparent text-neutral-300 font-medium hover:opacity-75 transition cursor-pointer"
+                onClick={authModal.onOpen}
+              >
+                <Button className="text-white">Sing up</Button>
+              </div>
+              <div
+                className="bg-white text-black rounded-full hover:opacity-75 transition cursor-pointer"
+                onClick={authModal.onOpen}
+              >
+                <Button>Log in</Button>
+              </div>
+            </>
+          )}
         </div>
       </div>
       {children}
