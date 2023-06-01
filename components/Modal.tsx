@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 
 interface ModalProps {
   isOpen: boolean;
-  onChabge: (open: boolean) => void;
+  onChange: (open: boolean) => void;
   title: string;
   description: string;
   children: React.ReactNode;
@@ -11,13 +11,13 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({
   isOpen,
-  onChabge,
+  onChange,
   children,
   description,
   title,
 }) => {
   return (
-    <Dialog.Root open={isOpen} defaultOpen={isOpen} onOpenChange={onChabge}>
+    <Dialog.Root open={isOpen} defaultOpen={isOpen} onOpenChange={onChange}>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-neutral-900/90 backdrop-blur-sm fixed inset-0">
           <Dialog.Content
