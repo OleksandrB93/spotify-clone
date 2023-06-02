@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { twMerge } from "tailwind-merge";
+import toast from "react-hot-toast";
 
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { HiHome } from "react-icons/hi";
@@ -30,8 +31,8 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
     router.refresh();
 
     if (error) {
-      console.log(error);
-    }
+      toast.error(error.message)
+    } return toast.success('Logged out!')
   };
 
   return (

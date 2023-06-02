@@ -40,21 +40,21 @@ const AuthModal = () => {
       onChange={onChange}
     >
       <Auth
-        theme="dark"
-        providers={["github", "google"]}
-        magicLink
         supabaseClient={supabaseClient}
+        providers={["github", "google"]}
+        magicLink={true}
         appearance={{
           theme: ThemeSupa,
           variables: {
             default: {
               colors: {
                 brand: "#404040",
-                brandAccent: "#22c553",
+                brandAccent: "#22c55e",
               },
             },
           },
         }}
+        theme="dark"
       />
     </Modal>
   );
