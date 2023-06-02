@@ -129,7 +129,7 @@ const UploadModal: React.FC<UploadModalProps> = ({}) => {
         <div>
           <div className="pb-1">Select a song file</div>
           <Input
-            style={{ padding: 0, backgroundColor: '#425c4c'}}
+            style={{ padding: 0, backgroundColor: "#425c4c" }}
             id="song"
             type="file"
             disabled={isLoading}
@@ -139,9 +139,9 @@ const UploadModal: React.FC<UploadModalProps> = ({}) => {
         </div>
 
         <div>
-          <div className="pb-1">Select an image</div>
+          <div className="pb-1 text-al">Select an image</div>
           <Input
-            style={{ padding: 0, backgroundColor: '#425c4c', textAlign:'center'}}
+            style={{ padding: 0, backgroundColor: "#425c4c" }}
             id="image"
             type="file"
             disabled={isLoading}
